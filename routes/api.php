@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-    
+
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'v1'], function () {
 
-    // include 'v1.php'; // API Routes : v1
+    include 'v1.php'; // API Routes : v1
 
     Route::controller(\App\Http\Controllers\Api\AuthController::class)->group(function () {
         Route::post('/logout', 'logout');
@@ -24,10 +24,10 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'v1'], function () {
 
 });
 
-Route::controller(\App\Http\Controllers\Api\V1\RoleController::class)->group(function () {
-    Route::get('/role', 'list');
-    Route::get('/role/all', 'all');
-});
+// Route::controller(\App\Http\Controllers\Api\V1\RoleController::class)->group(function () {
+//     Route::get('/role', 'list');
+//     Route::get('/role/all', 'all');
+// });
 
 Route::controller(\App\Http\Controllers\Api\AuthController::class)->group(function () {
     Route::post('/login', 'login');
