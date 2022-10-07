@@ -1,5 +1,8 @@
 <?php
 
+
+use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return response()->json(['msg'=> 'Hello Stranger']);
-    return view('welcome');
-});
-
-Route::get('/ping', function () {
-    dd('yo');
-    return response()->json(['msg'=> 'Hello Stranger']);
+    return Response::json([
+        '🚀' => 'Build Something Amazing'
+    ], 200); // Status code here
 });
