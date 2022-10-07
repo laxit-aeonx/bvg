@@ -32,3 +32,8 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'v1'], function () {
 Route::controller(\App\Http\Controllers\Api\AuthController::class)->group(function () {
     Route::post('/login', 'login');
 });
+
+Route::get('/ping', function () {
+    dd('yo');
+    return response()->json(['msg'=> 'Hello Stranger']);
+});
