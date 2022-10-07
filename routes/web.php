@@ -1,4 +1,4 @@
-<?php
+                                                <?php
 
 
 use Illuminate\Foundation\Inspiring;
@@ -19,5 +19,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return Response::json([
         '🚀' => 'Build Something Amazing'
-    ], 201); // Status code here
+    ], 200); // Status code here
 });
