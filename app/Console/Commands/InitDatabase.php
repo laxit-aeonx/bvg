@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\PermissionSeeder;
+use Database\Seeders\ProjectSeeder;
+use Database\Seeders\SuperAdminSeeder;
 
 class InitDatabase extends Command
 {
@@ -32,7 +34,7 @@ class InitDatabase extends Command
     {
         if ($this->confirm('This will Delete All Tables, Continue ?')) {
 
-            $this->output->progressStart(3);
+            $this->output->progressStart(5);
             $this->info(' Initializing...');
 
             Artisan::call('migrate:fresh');
@@ -44,10 +46,20 @@ class InitDatabase extends Command
             $this->output->progressAdvance();
             $this->info(' Seeding: Permissions');
 
+            $superAdminSeeder = new SuperAdminSeeder();
+            $superAdminSeeder->run();
+            $this->output->progressAdvance();
+            $this->info(' Seeding: Super Admin');
+
             $adminSeeder = new AdminSeeder();
             $adminSeeder->run();
             $this->output->progressAdvance();
             $this->info(' Seeding: Admin');
+
+            $projectSeeder = new ProjectSeeder();
+            $projectSeeder->run();
+            $this->output->progressAdvance();
+            $this->info(' Seeding: Project');
 
             $this->output->progressFinish();
         }

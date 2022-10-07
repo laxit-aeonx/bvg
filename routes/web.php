@@ -1,4 +1,4 @@
-                                                <?php
+<?php
 
 
 use Illuminate\Foundation\Inspiring;
@@ -20,4 +20,11 @@ Route::get('/', function () {
     return Response::json([
         '🚀' => 'Build Something Amazing'
     ], 200); // Status code here
+});
+
+Route::fallback(function () {
+    return response()->json([
+        'error' => 'URL Not Found (￣﹏￣；) ',
+        'message' => 'Incase You are looking for API endpoint, kindly add /api after domain name'
+    ], 404);
 });

@@ -40,6 +40,11 @@ class PermissionSeeder extends Seeder
         $role = Role::create(['name' => 'admin']);
         $role->givePermissionTo([
             'user-list',
-        ]);
+        ]); // Project Admins
+
+        $role = Role::create(['name' => 'user']);
+        $role->givePermissionTo([
+            'user-list',
+        ]); // Users
     }
 }

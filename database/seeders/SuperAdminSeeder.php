@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class AdminSeeder extends Seeder
+class SuperAdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,9 +17,10 @@ class AdminSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'admin',
-            'email' => 'admin@mail.com',
+            'name' => 'super admin',
+            'email' => 'superadmin@mail.com',
             'password' => Hash::make('Abc@123'),
-        ])->assignRole('admin');
+            'is_admin' => true
+        ])->assignRole('super-admin');
     }
 }

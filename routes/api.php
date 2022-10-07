@@ -24,16 +24,13 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'v1'], function () {
 
 });
 
-// Route::controller(\App\Http\Controllers\Api\V1\RoleController::class)->group(function () {
-//     Route::get('/role', 'list');
-//     Route::get('/role/all', 'all');
-// });
-
 Route::controller(\App\Http\Controllers\Api\AuthController::class)->group(function () {
     Route::post('/login', 'login');
 });
 
-Route::get('/ping', function () {
-    dd('yo');
-    return response()->json(['msg'=> 'Hello Stranger']);
+Route::fallback(function () {
+    return response()->json([
+        'error' => 'Resource Not Found ㄟ( ▔, ▔ )ㄏ ',
+        'message' => 'Make sure you have entered correct Route|URL'
+    ], 404);
 });
