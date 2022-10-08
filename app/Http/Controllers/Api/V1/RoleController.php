@@ -10,13 +10,6 @@ class RoleController extends Controller
 {
     public function list()
     {
-        $roles = Role::all();
-        return response($roles, 200);
-    }
-
-    public function all()
-    {
-        $roles = Role::all();
-        return RoleResource::collection($roles);
+        return RoleResource::collection(Role::all());
     }
 }

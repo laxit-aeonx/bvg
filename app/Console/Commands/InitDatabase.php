@@ -56,10 +56,10 @@ class InitDatabase extends Command
             $this->output->progressAdvance();
             $this->info(' Seeding: Admin');
 
-            $projectSeeder = new ProjectSeeder();
-            $projectSeeder->run();
-            $this->output->progressAdvance();
-            $this->info(' Seeding: Project');
+            // $projectSeeder = new ProjectSeeder();
+            // $projectSeeder->run();
+            // $this->output->progressAdvance();
+            // $this->info(' Seeding: Project');
 
             $this->output->progressFinish();
         }

@@ -25,6 +25,6 @@ Route::get('/', function () {
 Route::fallback(function () {
     return response()->json([
         'error' => 'URL Not Found (￣﹏￣；) ',
-        'message' => 'Incase You are looking for API endpoint, kindly add /api after domain name'
+        'message' => "Incase You are looking for API endpoint, kindly add '/api' after domain name"
     ], 404);
 });
