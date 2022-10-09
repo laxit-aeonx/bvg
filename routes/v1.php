@@ -23,4 +23,5 @@ Route::controller(\App\Http\Controllers\Api\V1\ProjectController::class)->group(
     Route::get('/project', 'list');
     Route::get('/project/{project}', 'details');
     Route::post('/project/create', 'create');
+    Route::delete('/project/{project}', 'delete');
 });

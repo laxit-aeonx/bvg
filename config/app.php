@@ -186,7 +186,6 @@ return [
          * Package Service Providers...
          */
         Spatie\Permission\PermissionServiceProvider::class,
-
         /*
          * Application Service Providers...
          */
@@ -210,7 +209,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+        'CustomDatabase' => App\Helpers\CustomDatabase::class,
     ])->toArray(),
 
 ];

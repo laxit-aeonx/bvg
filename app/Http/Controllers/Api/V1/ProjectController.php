@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Helpers\CustomDatabase;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\Project\{ProjectResource, ProjectListResource};
 use App\Models\{Project, ProjectUser, User};
 use App\Http\Requests\Project\ProjectCreateRequest;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Winter\LaravelConfigWriter\ArrayFile;
 
 class ProjectController extends Controller
 {
@@ -23,23 +27,15 @@ class ProjectController extends Controller
 
     public function create(ProjectCreateRequest $request)
     {
+        Log::info('Controller Fired');
         try {
             DB::transaction(function () use ($request) {
 
-                $request['db_name'] = $request->slug . "_db";
-                $request['db_user'] = $request->slug . "_user";
+                $request['db_name'] = "bvg_" . strtolower($request->slug);
+                $request['db_user'] = strtolower($request->slug) . "_user";
                 $request['db_pass'] = Str::random(10);
 
                 $project = Project::create($request->all());
-
-                ProjectUser::create([
-                    'project_id' => $project->id,
-                    'user_id' => $request->user
-                ]);
-
-                DB::statement("CREATE DATABASE {$project->db_name}");
-                DB::statement("CREATE USER '{$project->db_user}'@'localhost' IDENTIFIED BY '{$$project->db_pass}' ");
-                DB::statement("GRANT ALL PRIVILEGES ON {$project->db_name}. * TO '{$project->db_user}'@'localhost'");
             });
 
             return response([
@@ -49,7 +45,20 @@ class ProjectController extends Controller
 
             return response([
                 'message' => 'Could Not Create Project',
-                'error' => $th
+                'exception' => $th
+            ], 500);
+        }
+    }
+
+    public function delete($project)
+    {
+        if (Project::findOrFail($project)->delete()) {
+            return response([
+                'message' => 'Project Deleted',
+            ], 200);
+        } else {
+            return response([
+                'message' => 'Could not Delete Project'
             ], 500);
         }
     }

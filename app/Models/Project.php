@@ -10,6 +10,8 @@ class Project extends Model
 {
     use HasFactory, Uuids;
 
+    public $timestamps = true;
+
     protected $fillable = [
         'id',
         'slug',
@@ -17,7 +19,7 @@ class Project extends Model
         'description',
         'db_name',
         'db_user',
-        'db_pass',
+        'db_pass'
     ];
 
     public function getUser()

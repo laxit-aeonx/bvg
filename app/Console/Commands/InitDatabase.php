@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\PermissionSeeder;
-use Database\Seeders\ProjectSeeder;
 use Database\Seeders\SuperAdminSeeder;
 
 class InitDatabase extends Command

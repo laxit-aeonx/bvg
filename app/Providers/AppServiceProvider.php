@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Project;
+use App\Observers\ProjectObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        JsonResource::withoutWrapping();
+        Project::observe(ProjectObserver::class);
+        JsonResource::withoutWrapping(); // removes data from API resources
     }
 }
