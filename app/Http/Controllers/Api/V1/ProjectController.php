@@ -31,8 +31,10 @@ class ProjectController extends Controller
         try {
             DB::transaction(function () use ($request) {
 
-                $request['db_name'] = "bvg_" . strtolower($request->slug);
-                $request['db_user'] = strtolower($request->slug) . "_user";
+                $request['slug'] = strtolower($request->slug);
+                $request['db_host'] = config('database.connections.mysql.host');
+                $request['db_name'] = "bvg_" . $request->slug;
+                $request['db_user'] = "bvg_" . $request->slug . "_user";
                 $request['db_pass'] = Str::random(10);
 
                 $project = Project::create($request->all());

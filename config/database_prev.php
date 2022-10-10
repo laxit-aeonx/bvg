@@ -50,21 +50,13 @@ return [
             'engine' => null,
             'options' => [],
         ],
-        'nasdaq' => [
+        'demo' => [
             'driver' => 'mysql',
             'host' => '127.0.0.1',
             'port' => '3306',
-            'database' => 'bvg_nasdaq',
-            'username' => 'nasdaq_user',
-            'password' => '1T9xBJXPp2',
-        ],
-        'vormir' => [
-            'driver' => 'mysql',
-            'host' => '127.0.0.1',
-            'port' => '3306',
-            'database' => 'bvg_vormir',
-            'username' => 'vormir_user',
-            'password' => 'cq4cDjFvqz',
+            'database' => 'bvg_demo',
+            'username' => 'demo_user',
+            'password' => 'EPMetboqD4',
         ],
     ],
 

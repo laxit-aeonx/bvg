@@ -46,7 +46,7 @@ class CustomDatabase
         return $stmt->fetch() !== false;
     }
 
-    public function createDatabase($database)
+    public function createDatabase($host, $database, $user, $password)
     {
         if (!$this->databaseExists($database)) {
             try {
@@ -57,6 +57,10 @@ class CustomDatabase
                     $this->config['collation']
                 ));
 
+                $this->pdo->exec("CREATE USER '$user'@'%' IDENTIFIED BY '$password'");
+                $this->pdo->exec("GRANT ALL ON `$database`.* TO '$user'@'%'");
+                $this->pdo->exec("FLUSH PRIVILEGES");
+
                 return true;
             } catch (\Throwable $th) {
                 return $th;
@@ -66,11 +70,17 @@ class CustomDatabase
         }
     }
 
-    public function dropDatabase($database)
+    public function dropDatabase($host, $database, $user)
     {
         if ($this->databaseExists($database)) {
             try {
+
                 $this->pdo->exec("DROP DATABASE `$database`");
+                $this->pdo->exec("DROP USER IF EXISTS '$user'@'%'");
+                $this->pdo->exec("REVOKE ALL PRIVILEGES ON `$database`.* TO '$user'@'%'");
+
+                $this->pdo->exec("FLUSH PRIVILEGES");
+
                 return true;
             } catch (\Throwable $th) {
                 return $th;

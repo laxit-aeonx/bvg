@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Helpers\CustomDatabase;
+use App\Jobs\MigrateProjectDatabase;
 use App\Models\Project;
 use Illuminate\Support\Facades\Log;
 use Winter\LaravelConfigWriter\ArrayFile;
@@ -20,15 +21,15 @@ class ProjectObserver
         // TODO push this in queue for config writing
         $conn = new CustomDatabase();
         try {
-            if ($conn->createDatabase($project->db_name)) {
+            if ($conn->createDatabase($project->host, $project->db_name, $project->db_user, $project->db_password)) {
 
                 $this->configBackup(config('database.connections'));
 
                 $config = ArrayFile::open(base_path('config/database.php'));
                 $config->set('connections.' . strtolower($project->slug), [
                     'driver' => 'mysql',
-                    'host' => env('DB_HOST', '127.0.0.1'),
-                    'port' => env('DB_PORT', '3306'),
+                    'host' => config('database.connections.mysql.host'),
+                    'port' => config('database.connections.mysql.port'),
                     'database' => $project->db_name,
                     'username' => $project->db_user,
                     'password' => $project->db_pass,
@@ -36,6 +37,7 @@ class ProjectObserver
                 $config->write();
                 sleep(3); // take a break to make sure file is written
 
+                // MigrateProjectDatabase::dispatchSync($project);
             } else {
                 return response([
                     'message' => 'Could Not Create Database'
@@ -71,7 +73,7 @@ class ProjectObserver
         // TODO push this in queue for config writing
         $conn = new CustomDatabase();
         try {
-            if ($conn->dropDatabase($project->db_name)) {
+            if ($conn->dropDatabase($project->host, $project->db_name, $project->db_user)) {
 
                 $old_config = config('database.connections'); //get all config
 

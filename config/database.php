@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -50,13 +51,13 @@ return [
             'engine' => null,
             'options' => [],
         ],
-        'nasdaq' => [
+        'demo' => [
             'driver' => 'mysql',
-            'host' => '127.0.0.1',
+            'host' => '%',
             'port' => '3306',
-            'database' => 'bvg_nasdaq',
-            'username' => 'nasdaq_user',
-            'password' => '1T9xBJXPp2',
+            'database' => 'bvg_demo',
+            'username' => 'bvg_demo_user',
+            'password' => 'jH1Iic5NwF',
         ],
     ],
 
