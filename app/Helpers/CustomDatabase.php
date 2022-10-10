@@ -58,7 +58,7 @@ class CustomDatabase
                 ));
 
                 $this->pdo->exec("CREATE USER '$user'@'%' IDENTIFIED BY '$password'");
-                $this->pdo->exec("GRANT ALL ON `$database`.* TO '$user'@'%'");
+                $this->pdo->exec("GRANT ALL PRIVILEGES ON `$database`.* TO '$user'@'%'");
                 $this->pdo->exec("FLUSH PRIVILEGES");
 
                 return true;
