@@ -11,6 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Artisan;
 use romanzipp\QueueMonitor\Traits\IsMonitored;
+use Illuminate\Support\Facades\Log;
 
 class MigrateProjectDatabase implements ShouldQueue
 {
@@ -34,13 +35,15 @@ class MigrateProjectDatabase implements ShouldQueue
      */
     public function handle()
     {
+        $project = $this->project->slug;
+        Log::info('Migration Started for '.$project);
         Artisan::call("config:clear");
         Artisan::call("config:cache");
 
         Artisan::call('migrate', [
             '--path' => "database/migrations/project/2022_10_09_101428_create_project_users.php",
             '--force' => true,
-            '--database' => $this->project->slug
+            '--database' => $project
         ]);
     }
 }

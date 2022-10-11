@@ -49,7 +49,6 @@ class CreateProjectDatabase implements ShouldQueue
                     'password' => $project->db_pass,
                 ]);
                 $config->write();
-                sleep(3); // take a break to make sure file is written
 
                 MigrateProjectDatabase::dispatch($project);
             } else {
