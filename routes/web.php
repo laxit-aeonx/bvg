@@ -22,6 +22,10 @@ Route::get('/', function () {
     ], 200); // Status code here
 });
 
+Route::prefix('jobs')->group(function () {
+    Route::queueMonitor();
+}); // job monitoring
+
 Route::fallback(function () {
     return response()->json([
         'error' => 'URL Not Found (￣﹏￣；) ',

@@ -10,10 +10,11 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Artisan;
 use Winter\LaravelConfigWriter\ArrayFile;
+use romanzipp\QueueMonitor\Traits\IsMonitored;
 
 class CreateProjectDatabase implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, IsMonitored;
 
     public $project;
     /**
