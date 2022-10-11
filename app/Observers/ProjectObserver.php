@@ -4,10 +4,8 @@ namespace App\Observers;
 
 use App\Helpers\CustomDatabase;
 use App\Jobs\CreateProjectDatabase;
-use App\Jobs\MigrateProjectDatabase;
 use App\Models\Project;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Log;
+
 use Winter\LaravelConfigWriter\ArrayFile;
 
 class ProjectObserver
