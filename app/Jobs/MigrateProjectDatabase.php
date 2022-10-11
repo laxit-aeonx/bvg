@@ -33,7 +33,13 @@ class MigrateProjectDatabase implements ShouldQueue
      */
     public function handle()
     {
-        Artisan::call('migrate', array('--path' => "database/migrations/project", '--force' => true));
-        dd($this->project);
+        Artisan::call("config:clear");
+        Artisan::call("config:cache");
+
+        Artisan::call('migrate', [
+            '--path' => "database/migrations/project/2022_10_09_101428_create_project_users.php",
+            '--force' => true,
+            '--database' => $this->project->slug
+        ]);
     }
 }

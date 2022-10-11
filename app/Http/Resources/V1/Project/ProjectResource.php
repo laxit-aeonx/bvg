@@ -22,8 +22,7 @@ class ProjectResource extends JsonResource
             'database' => [
                 'db_name' => $this->db_name,
                 'db_user' => $this->db_user
-            ],
-            'users' => UserResource::collection($this->getUser),
+            ]
         ];
     }
 }

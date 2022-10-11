@@ -36,7 +36,7 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => null,
-            'host' => '127.0.0.1',
+            'host' => 'localhost',
             'port' => '3306',
             'database' => 'bvg',
             'username' => 'root',
@@ -50,13 +50,13 @@ return [
             'engine' => null,
             'options' => [],
         ],
-        'demo' => [
+        'nhai' => [
             'driver' => 'mysql',
             'host' => '127.0.0.1',
             'port' => '3306',
-            'database' => 'bvg_demo',
-            'username' => 'demo_user',
-            'password' => 'EPMetboqD4',
+            'database' => 'bvg_nhai',
+            'username' => 'bvg_nhai_user',
+            'password' => 'AfxqxzvHcc',
         ],
     ],
 

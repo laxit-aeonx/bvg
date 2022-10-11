@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('slug')->unique();
-            $table->string('db_host');
             $table->string('db_name');
             $table->string('db_user');
             $table->string('db_pass');

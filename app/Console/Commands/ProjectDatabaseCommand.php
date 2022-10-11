@@ -1,12 +1,28 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Console\Commands;
 
+use Illuminate\Console\Command;
 use PDO;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 
-class CustomDatabase
+class ProjectDatabaseCommand extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'project:db {operation} {database} {user} {password?}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'This command creates & drop database with users';
+
     /**
      * @var PDO
      */
@@ -20,7 +36,56 @@ class CustomDatabase
      */
     protected $config = [];
 
-    public function __construct()
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
+    {
+        Log::info('command fired');
+        $this->setConfig(); // set PDO connection
+
+        switch ($this->argument('operation')) {
+            case 'create':
+                Log::info('Case Create');
+                if ($this->argument('password')) {
+                    Log::info('case success');
+                    if ($this->createDatabase($this->argument('database'), $this->argument('user'), $this->argument('password'))) {
+                        Log::info('Successful Query');
+                        $this->info('Operation Successfull');
+                        return true;
+                    } else {
+                        Log::info('Failed Query');
+                        $this->info('Operation Failed');
+                        return false;
+                    }
+                } else {
+                    Log::info('case error');
+                    $this->error('Please provide password');
+                    return false;
+                }
+                break;
+
+            case 'drop':
+
+                if ($this->dropDatabase($this->argument('database'), $this->argument('user'))) {
+                    $this->info('Operation Successfull');
+                    return Command::SUCCESS;
+                } else {
+                    $this->info('Operation Failed');
+                    return Command::FAILURE;
+                }
+                break;
+
+            default:
+                $this->error("choose either 'create' or 'drop' as operation");
+                return Command::FAILURE;
+                break;
+        }
+    }
+
+    public function setConfig()
     {
         $this->config = [
             'host' => Config::get('database.connections.mysql.host'),
