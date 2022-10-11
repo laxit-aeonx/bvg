@@ -10,7 +10,15 @@ class Project extends Model
 {
     use HasFactory, Uuids;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'id',
+        'slug',
+        'name',
+        'description',
+        'db_name',
+        'db_user',
+        'db_pass',
+    ];
 
     public function getUser()
     {
