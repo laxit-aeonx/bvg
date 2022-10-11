@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -51,22 +52,6 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
-        ],
-        'nhai' => [
-            'driver' => 'mysql',
-            'host' => '127.0.0.1',
-            'port' => '3306',
-            'database' => 'bvg_nhai',
-            'username' => 'bvg_nhai_user',
-            'password' => 'AfxqxzvHcc',
-        ],
-        'action' => [
-            'driver' => 'mysql',
-            'host' => 'localhost',
-            'port' => '3306',
-            'database' => 'bvg_action',
-            'username' => 'bvg_action_user',
-            'password' => 'Yc3f7dFi9G',
         ],
     ],
 
