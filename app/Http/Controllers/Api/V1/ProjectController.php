@@ -34,7 +34,7 @@ class ProjectController extends Controller
             $project = Project::create($request->all());
 
             return response([
-                'message' => 'Project Created',
+                'message' => 'Project Creation Started . . .',
                 'data' => new ProjectResource($project)
             ], 200);
         } catch (\Throwable $th) {
