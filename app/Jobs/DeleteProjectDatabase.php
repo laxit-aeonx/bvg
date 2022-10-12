@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use romanzipp\QueueMonitor\Traits\IsMonitored;
+use Winter\LaravelConfigWriter\ArrayFile;
 
 class DeleteProjectDatabase implements ShouldQueue
 {
@@ -23,8 +24,6 @@ class DeleteProjectDatabase implements ShouldQueue
      */
     public function __construct($project)
     {
-        Log::info("delete CONSTRUCTOR");
-        Log::info($project);
         $this->project = $project;
     }
 
@@ -35,21 +34,6 @@ class DeleteProjectDatabase implements ShouldQueue
      */
     public function handle()
     {
-        try {
-            $project = $this->project;
-            Log::info("delete jobs fired with" . $project['slug']);
-            if (Artisan::call("project:db drop {$project['db_name']} {$project['db_user']} ")) {
-                Artisan::call("config:sync");
-            } else {
-                return response([
-                    'message' => 'Could Not Delete Database'
-                ], 500);
-            }
-        } catch (\Throwable $th) {
-            return response([
-                'message' => 'Could Not Create Database',
-                'exception' => $th
-            ], 500);
-        }
+        Artisan::call("project:db drop {$this->project['db_name']} {$this->project['db_user']} ");
     }
 }
