@@ -60,6 +60,9 @@ class InitDatabase extends Command
             // $this->output->progressAdvance();
             // $this->info(' Seeding: Project');
 
+            Artisan::call('project:sync');
+            Artisan::call('config:sync');
+
             $this->output->progressFinish();
         }
     }

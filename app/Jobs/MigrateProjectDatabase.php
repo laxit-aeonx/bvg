@@ -36,7 +36,8 @@ class MigrateProjectDatabase implements ShouldQueue
     public function handle()
     {
         $project = $this->project->slug;
-        Log::info('Migration Started for '.$project);
+        Log::info('Migration Started for ' . $project);
+
         Artisan::call("config:clear");
         Artisan::call("config:cache");
 

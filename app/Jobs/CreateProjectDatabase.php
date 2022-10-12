@@ -43,8 +43,8 @@ class CreateProjectDatabase implements ShouldQueue
                 $config = ArrayFile::open(base_path('config/database.php'));
                 $config->set('connections.' . strtolower($project->slug), [
                     'driver' => 'mysql',
-                    'host' => config('database.connections.mysql.host'),
-                    'port' => config('database.connections.mysql.port'),
+                    'host' => env('DB_HOST', '127.0.0.1'),
+                    'port' => env('DB_PORT', '3306'),
                     'database' => $project->db_name,
                     'username' => $project->db_user,
                     'password' => $project->db_pass,
