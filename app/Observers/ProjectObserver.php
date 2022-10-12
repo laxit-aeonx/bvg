@@ -40,8 +40,8 @@ class ProjectObserver
      */
     public function deleted(Project $project)
     {
-        Log::info('deletion observed');
-        DeleteProjectDatabase::dispatch();
+        $projectData = $project->toArray();
+        DeleteProjectDatabase::dispatch($projectData);
     }
 
     /**

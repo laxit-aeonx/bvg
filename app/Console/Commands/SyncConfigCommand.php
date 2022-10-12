@@ -41,9 +41,11 @@ class SyncConfigCommand extends Command
             if ($project) {
                 $this->info('Config ' . $key . ' Verified');
             } else {
-                $this->warn('Stale Config');
+
                 if ($key != 'mysql') {
+                    $this->warn('Stale Config ' . $key);
                     unset($configs[$key]); // remove current project slug
+                    $this->info('Config ' . $key . ' Removed');
                 }
             }
         }

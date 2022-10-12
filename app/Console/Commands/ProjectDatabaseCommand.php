@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use PDO;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
@@ -43,7 +44,6 @@ class ProjectDatabaseCommand extends Command
      */
     public function handle()
     {
-        Log::info('command fired');
         $this->setConfig(); // set PDO connection
 
         switch ($this->argument('operation')) {
@@ -87,20 +87,25 @@ class ProjectDatabaseCommand extends Command
 
     public function setConfig()
     {
+
+        Log::info("setting config");
+
         $this->config = [
-            'host' => Config::get('database.connections.mysql.host'),
-            'port' => Config::get('database.connections.mysql.port'),
-            'username' => Config::get('database.connections.mysql.username'),
-            'password' => Config::get('database.connections.mysql.password'),
-            'charset' => Config::get('database.connections.mysql.charset'),
-            'collation' => Config::get('database.connections.mysql.collation'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
         ];
 
+        Log::info($this->config);
+
         $this->pdo = $this->getPdo(
-            Config::get('database.connections.mysql.host'),
-            Config::get('database.connections.mysql.port'),
-            Config::get('database.connections.mysql.username'),
-            Config::get('database.connections.mysql.password'),
+            env('DB_HOST', '127.0.0.1'),
+            env('DB_PORT', '3306'),
+            env('DB_USERNAME', 'forge'),
+            env('DB_PASSWORD', ''),
         );
     }
 
@@ -122,8 +127,11 @@ class ProjectDatabaseCommand extends Command
                     $this->config['collation']
                 ));
 
+                $mainDB = env('DB_DATABASE', 'bvg'); // added this to solve queue issue
+
                 $this->pdo->exec("CREATE USER '$user'@'%' IDENTIFIED BY '$password'");
                 $this->pdo->exec("GRANT ALL PRIVILEGES ON `$database`.* TO '$user'@'%'");
+                $this->pdo->exec("GRANT ALL PRIVILEGES ON `$mainDB`.* TO '$user'@'%'");
                 $this->pdo->exec("FLUSH PRIVILEGES");
 
                 return true;
