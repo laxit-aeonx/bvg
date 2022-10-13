@@ -5,8 +5,6 @@ namespace App\Observers;
 use App\Jobs\CreateProjectDatabase;
 use App\Jobs\DeleteProjectDatabase;
 use App\Models\Project;
-use Illuminate\Support\Facades\Log;
-use Winter\LaravelConfigWriter\ArrayFile;
 
 class ProjectObserver
 {

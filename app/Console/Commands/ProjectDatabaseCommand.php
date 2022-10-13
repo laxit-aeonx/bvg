@@ -49,7 +49,6 @@ class ProjectDatabaseCommand extends Command
 
         switch ($this->argument('operation')) {
             case 'create':
-                Log::info('Case Create');
                 if ($this->argument('password')) {
                     if ($this->createDatabase($this->argument('database'), $this->argument('user'), $this->argument('password'))) {
                         $this->info('Operation Successfull');
@@ -103,6 +102,7 @@ class ProjectDatabaseCommand extends Command
 
                 $this->pdo->exec("CREATE USER '$user'@'%' IDENTIFIED BY '$password'");
                 $this->pdo->exec("GRANT ALL PRIVILEGES ON `$database`.* TO '$user'@'%'");
+                $this->pdo->exec("GRANT ALL PRIVILEGES ON information_schema.tables TO '$user'@'%'");
                 $this->pdo->exec("FLUSH PRIVILEGES");
 
                 return true;
@@ -121,10 +121,8 @@ class ProjectDatabaseCommand extends Command
 
                 $this->pdo->exec("DROP DATABASE `$database`");
                 $this->pdo->exec("DROP USER IF EXISTS '$user'@'%'");
-                $this->pdo->exec("REVOKE ALL PRIVILEGES ON `$database`.* TO '$user'@'%'");
 
                 $this->pdo->exec("FLUSH PRIVILEGES");
-
 
                 return true;
             } catch (\Throwable $th) {

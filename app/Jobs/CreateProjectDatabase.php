@@ -10,12 +10,11 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Artisan;
 use Winter\LaravelConfigWriter\ArrayFile;
-use romanzipp\QueueMonitor\Traits\IsMonitored;
 use Illuminate\Support\Facades\Log;
 
 class CreateProjectDatabase implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, IsMonitored;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $project;
     /**
@@ -50,7 +49,7 @@ class CreateProjectDatabase implements ShouldQueue
                     'password' => $project->db_pass,
                 ]);
                 $config->write();
-                Log::info('starting migration');
+
                 MigrateProjectDatabase::dispatch($project)->delay(now()->addSeconds(5));
             } else {
                 return response([
